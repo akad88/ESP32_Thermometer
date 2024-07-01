@@ -1,1 +1,1 @@
-# ESP32_Thermometer
+The ESP32 Thermometer project is intended to measure and display the temperature of the room. The device was created using a AD8495 Thermocouple Amplifier and the data is displayed on a separate web server. The calculated temperature is proportional to the voltage outputted by the amplifier. The information is sent out on a web page and is also visible on the serial display.
