@@ -1,0 +1,81 @@
+const char html_page[] PROGMEM = R"rawString(
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Monitor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Roboto', sans-serif;
+      background: #FFFFFF; /* Background color set to white */
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      padding: 2em;
+      background: rgba(255, 255, 255, 0.95); /* Slightly transparent white for depth */
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle depth effect */
+    }
+    h1 {
+      color: #333; /* Dark grey text for contrast */
+      margin-bottom: 1em;
+    }
+    .temperature {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.05); /* Very light background for the temperature boxes */
+      color: #333; /* Consistent text color */
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      margin: 0.5em 0;
+      font-size: 2em;
+    }
+    .temperature span {
+      font-size: 2.5em;
+      font-weight: 500;
+    }
+    .degree-symbol {
+      font-size: 0.5em;
+      vertical-align: super;
+    }
+    @media (max-width: 600px) {
+      .temperature span {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1> ESP32 Temperature Monitor</h1>
+    <div class="temperature">
+      <span id="TempValueCelsius">--</span><span class="degree-symbol">&deg;C</span>
+    </div>
+    <div class="temperature">
+      <span id="TempValueFahrenheit">--</span><span class="degree-symbol">&deg;F</span>
+    </div>
+  </div>
+ 
+  <script>
+    setInterval(function() {
+      fetch("readTemp")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("TempValueCelsius").innerHTML = data.celsius;
+          document.getElementById("TempValueFahrenheit").innerHTML = data.fahrenheit;
+        })
+        .catch(error => console.error("Error fetching temperature data:", error));
+    }, 1000);
+  </script>
+</body>
+</html>
+)rawString";
